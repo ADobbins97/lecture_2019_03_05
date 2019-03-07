@@ -24,12 +24,12 @@ gapminder %>%
   geom_point(alpha = .5, show.legend = FALSE)+
   facet_grid(~ continent)+
   scale_x_log10(breaks = c(1000, 10000))+
-  labs(title = "The World Gets Better Every Year",
-       caption = "Source = gapminder dataset")+
   xlab("GDP Per Capita")+
   ylab("Life Expectancy")+
   scale_color_manual(values = country_colors)+
-  transition_time(year)
+  transition_time(year)+
+  labs(title = "The World Gets Better Every Year: {frame_time}",
+       caption = "Source = gapminder dataset")
 
 p
 
