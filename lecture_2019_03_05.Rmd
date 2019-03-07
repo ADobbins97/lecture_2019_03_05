@@ -1,0 +1,33 @@
+---
+title: "lecture_2019_03_05"
+author: "Alexandra Dobbins"
+date: "3/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(gapminder)
+library(gganimate)
+```
+
+
+```{r}
+ 
+p <-
+gapminder %>% 
+  mutate(continent2 = fct_collapse(continent, 
+                      Asia = c("Asia","Oceania"))) %>% 
+  filter(year == 1952, continent2 != "Europe") %>%
+  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = continent, frame = year)) +
+  geom_point(alpha = .5)+
+  facet_wrap(~ continent2)+
+  scale_x_log10()+
+  labs(title = "The World Gets Better Every Year",
+       caption = "Source = gapminder dataset")+
+  xlab("GDP Per Capita")+
+  ylab("Life Expectancy")
+
+```
