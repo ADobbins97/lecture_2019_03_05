@@ -1,7 +1,4 @@
 ---
-title: "lecture_2019_03_05"
-author: "Alexandra Dobbins"
-date: "3/5/2019"
 output: html_document
 ---
 
@@ -11,23 +8,27 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(gapminder)
 library(gganimate)
+library()
 ```
 
 
-```{r}
+```{r echo = FALSE, message = FALSE}
  
 p <-
 gapminder %>% 
-  mutate(continent2 = fct_collapse(continent, 
+  mutate(continent = fct_collapse(continent, 
                       Asia = c("Asia","Oceania"))) %>% 
-  filter(year == 1952, continent2 != "Europe") %>%
-  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = continent, frame = year)) +
-  geom_point(alpha = .5)+
-  facet_wrap(~ continent2)+
-  scale_x_log10()+
+  filter(year == 1952, continent != "Europe") %>% 
+  ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = country)) +
+  geom_point(alpha = .5, show.legend = FALSE)+
+  facet_grid(~ continent)+
+  scale_x_log10(breaks = c(1000, 10000))+
   labs(title = "The World Gets Better Every Year",
        caption = "Source = gapminder dataset")+
   xlab("GDP Per Capita")+
-  ylab("Life Expectancy")
+  ylab("Life Expectancy")+
+  scale_color_manual(values = country_colors)
+
+p
 
 ```
