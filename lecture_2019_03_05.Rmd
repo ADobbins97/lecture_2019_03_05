@@ -8,7 +8,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(gapminder)
 library(gganimate)
-library()
+library(gifski)
+library(png)
 ```
 
 
@@ -18,7 +19,7 @@ p <-
 gapminder %>% 
   mutate(continent = fct_collapse(continent, 
                       Asia = c("Asia","Oceania"))) %>% 
-  filter(year == 1952, continent != "Europe") %>% 
+  filter(continent != "Europe") %>%
   ggplot(aes(x = gdpPercap, y = lifeExp, size = pop, color = country)) +
   geom_point(alpha = .5, show.legend = FALSE)+
   facet_grid(~ continent)+
@@ -27,7 +28,8 @@ gapminder %>%
        caption = "Source = gapminder dataset")+
   xlab("GDP Per Capita")+
   ylab("Life Expectancy")+
-  scale_color_manual(values = country_colors)
+  scale_color_manual(values = country_colors)+
+  transition_time(year)
 
 p
 
